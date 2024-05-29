@@ -1,0 +1,36 @@
+<%= form_with(model: tv) do |form| %>
+  <% if tv.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(tv.errors.count, "error") %> prohibited this tv from being saved:</h2>
+
+      <ul>
+        <% tv.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :name, style: "display: block" %>
+    (nom)
+    <%= form.text_field :name %>
+  </div>
+
+  <div>
+    <%= form.label :rss, style: "display: block" %>
+    (rss feed)
+    <%= form.text_field :rss %>
+  </div>
+
+  <div>
+    <%= form.label :lien, style: "display: block" %>
+    (lien m3u8)
+    <%= form.text_field :lien %>
+  </div>
+  <p>bonne chance!!</p>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>

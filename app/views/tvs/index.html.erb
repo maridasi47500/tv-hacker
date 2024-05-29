@@ -1,0 +1,14 @@
+<p style="color: green"><%= notice %></p>
+
+<h1>Tvs</h1>
+
+<div id="tvs">
+  <% @tvs.each do |tv| %>
+    <%= render tv %>
+    <p>
+      <%= link_to "Show this tv", tv %>
+    </p>
+  <% end %>
+</div>
+
+<%= link_to "New tv", new_tv_path %>

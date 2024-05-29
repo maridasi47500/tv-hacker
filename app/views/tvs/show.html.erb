@@ -1,0 +1,12 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @tv %>
+
+<div>
+  <%= link_to "script1", script1_tv_path(@tv) %> |
+  <%= link_to "script2", script2_tv_path(@tv) %> |
+  <%= link_to "Edit this tv", edit_tv_path(@tv) %> |
+  <%= link_to "Back to tvs", tvs_path %>
+
+  <%= button_to "Destroy this tv", @tv, method: :delete %>
+</div>
