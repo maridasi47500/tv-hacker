@@ -1,8 +1,12 @@
 Rails.application.routes.draw do
+  resources :videos
   resources :tvs do
     member do
       get "script1"
       get "script2"
+    end
+    collection do
+      get "allvideo"
     end
   end
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html

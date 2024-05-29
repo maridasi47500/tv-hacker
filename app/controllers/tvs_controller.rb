@@ -14,6 +14,8 @@ class TvsController < ApplicationController
                         end
                 threads << thread
                     @res=threads.join
+    @lignecommande1="ruby cheriefm.rb #{@tv.rss}'"
+    @lignecommande2="sh scriptcheriefm.sh #{@tv.lien}'"
     render :show
   end
   def script2
@@ -26,10 +28,14 @@ class TvsController < ApplicationController
                 threads << thread
                     @res=threads.join
     render :show
+    @lignecommande1="ruby cheriefm.rb #{@tv.rss}'"
+    @lignecommande2="sh scriptcheriefm.sh #{@tv.lien}'"
   end
 
   # GET /tvs/1 or /tvs/1.json
   def show
+    @lignecommande1="ruby cheriefm.rb #{@tv.rss}'"
+    @lignecommande2="sh scriptcheriefm.sh #{@tv.lien}'"
   end
 
   # GET /tvs/new

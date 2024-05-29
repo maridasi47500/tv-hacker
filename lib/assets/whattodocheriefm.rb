@@ -95,10 +95,10 @@ j.to_h
 end
 @all=@y
 req = "require 'time'\nrequire 'open-uri'\nrequire 'active_record'\nrequire 'timeout'\nrequire 'nokogiri'\n"
-system(`cat <<EOF >cut.rb 
-#{req}\n
+ok=("""cat <<EOF > cut.rb 
+\n#{req}\n
 def hack(nombresecondes)
-\n@time_end=Time.parse('#{@time_end}')\n@all=#{@all.to_s}\n
+\n@time_end=Time.parse('\#{@time_end}')\n@all=\#{@all.to_s}\n
 temps = @all #.sort {|x,y| y['time'] <=> x['time']} #.pluck('time')
 \n0.upto(temps.length - 2).each.with_index do |nmusiques,i|
 \n  if nmusiques == 0
@@ -108,30 +108,31 @@ temps = @all #.sort {|x,y| y['time'] <=> x['time']} #.pluck('time')
 \n    t=tinsec.to_s
 \n    t2 = DateTime.strptime(t, '%s').strftime('%M:%S')
 \n  end
-
-\n    tinsec = (@time_end - Time.parse(temps[nmusiques]['time'])) + 60.to_f + (nombresecondes.to_f)
-\n    t=tinsec.to_s
-\n    t1 = DateTime.strptime(t, '%s').strftime('%M:%S')
-\n    #p @time_end
-\n    #p temps[nmusiques]
-\n    nom = temps[nmusiques]['video'].parameterize
-\n    if nom.strip.length > 0
-\n      cut = "sh tele.sh; "
-\n      wow="""dur=$(ffprobe -i tv.mp4 -show_entries format=duration -v quiet -of csv="p=0")
-\n      \ntrim=$((#{i == 0 ? "" : "dur - "}#{t2.split(":")[0].to_i*60+t2.split(":")[1].to_i}))
-\n      \ntrim2=$((dur - #{t1.split(":")[0].to_i*60+t1.split(":")[1].to_i}))
-\n      \nffmpeg -t $trim -i tv.mp4 #{nom}.mp4
-\n      """
-\n      yourfile="tele.sh"
-\n      File.open(yourfile, 'w') { |file| file.write(wow) }
-\n      cut+="mid3v2 -a \#{temps[nmusiques]['artist'].dump} -t \#{temps[nmusiques]['title'].dump} \#{nom}.mp4;"
-\n      system(cut)
-\n    end
+\n  tinsec = (@time_end - Time.parse(temps[nmusiques]['time'])) + 60.to_f + (nombresecondes.to_f)
+\n  t=tinsec.to_s
+\n  t1 = DateTime.strptime(t, '%s').strftime('%M:%S')
+\n  #p @time_end
+\n  #p temps[nmusiques]
+\n  nom = temps[nmusiques]['video'].parameterize
+\n  if nom.strip.length > 0
+\n    cut = \"sh tele.sh; \"
+\n    wow=\'\'\'dur=$(ffprobe -i tv.mp4 -show_entries format=duration -v quiet -of csv=\"p=0\")
+\n    \\ntrim=$((\#\{i == 0 ? \"\" : \"dur - \"\}\#\{t2.split(\":\")[0].to_i*60+t2.split(\":\")[1].to_i\}))
+\n    \\ntrim2=$((dur - \#\{t1.split(\":\")[0].to_i*60+t1.split(\":\")[1].to_i\}))
+\n    \\nffmpeg -t $trim -i tv.mp4 \#\{nom\}.mp4
+\n    \'\'\'
+\n    yourfile=\"tele.sh\"
+\n    File.open(yourfile, 'w') { |file| file.write(wow) }
+\n    cut+=\"mid3v2 -a \#\{temps[nmusiques]['title'].dump\} -t \#\{temps[nmusiques]['title'].dump\} \#\{nom\}.mp4;\"
+\n    system(cut)
+\n  end
 \nend
 \nend
 \nhack(-460)
 \n#mydate and time : lib/assets/history/#{@date}/
-\nEOF\nmkdir -p #{@date}; mv cut.rb #{@date}; mv tv.mp4 #{@date};(cd #{@date} && ruby cut.rb);`);
+\nEOF\n\necho heeeey\nls\nmkdir -p #{@date}; mv cut.rb #{@date}; mv tv.mp4 #{@date};(cd #{@date} && ruby cut.rb);\n
+""");
+File.write("ok.sh",ok)
   end
 end
 @rad=Tv.new

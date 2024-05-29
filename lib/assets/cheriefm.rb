@@ -4,7 +4,7 @@ require 'active_support/core_ext/hash'
 require "nokogiri"
 require "json"
 require "time"
-input_array=ARGV
+@input_array=ARGV
 def every_so_many_seconds(seconds)
   last_tick = Time.now
   loop do
@@ -29,7 +29,7 @@ def myfunc
 
 
 
-  tv_json=Nokogiri::XML(URI.open(input_array[0]))
+  tv_json=Nokogiri::XML(URI.open(@input_array[0]))
   ##p tv_json
   #tv_json.children.each_with_index do |x,i|
   #  p "----"
@@ -103,7 +103,7 @@ def myfunc
     next
   end
 rescue => e
-  #p e.message
+  p e.message
   p "ouy"
 end
 myfunc()
