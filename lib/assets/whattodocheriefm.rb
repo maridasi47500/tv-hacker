@@ -61,13 +61,13 @@ j=i.to_a.map do |k,v|
 end
 j.to_h
 end
-@all=@y.sort{|x|x["time"]}
+@all=@y.sort{|x|Time.parse(x["time"]).to_i}
 req = "require 'time'\nrequire 'open-uri'\nrequire 'active_record'\nrequire 'timeout'\nrequire 'nokogiri'\n"
 ok=("""cat <<EOF > cut.rb 
 \n#{req}\n
 def hack(nombresecondes)
 \n@time_end=Time.parse('#{@time_end}')\n@all=#{@all.to_s}\n
-temps = @all #.sort {|x,y| y['time'] <=> x['time']} #.pluck('time')
+temps = @all.reverse #.sort {|x,y| y['time'] <=> x['time']} #.pluck('time')
 \n0.upto(temps.length - 2).each.with_index do |nmusiques,i|
 \n  if nmusiques == 0
 \n    t2='00:00'
@@ -83,10 +83,11 @@ temps = @all #.sort {|x,y| y['time'] <=> x['time']} #.pluck('time')
 \n  #p temps[nmusiques]
 \n  nom = temps[nmusiques]['video'].parameterize
 \n  if nom.strip.length > 0
-\n    cut=\"\"\"dur=\\\$(ffprobe -i tv.mp4 -show_entries format=duration -v quiet -of csv=\\\"p=0\\\")
-\n    \ntrim=\\\$((\#\{i == 0 ? \"\" : \"dur - \"\}\#\{t2.split(\":\")[0].to_i*60+t2.split(\":\")[1].to_i\}))
-\n    \ntrim2=\\\$((dur - \#\{t1.split(\":\")[0].to_i*60+t1.split(\":\")[1].to_i\}))
-\n    \nffmpeg -ss $trim -t $trim2 -i tv.mp4 #{nom}.mp4
+\n    cut=\"\"\"float=\\\$(ffprobe -i tv.mp4 -show_entries format=duration -v quiet -of csv=\\\"p=0\\\")
+\n    \idur=\\\${float%.*}
+\n    \ntrim=\\\$((dur - \#\{t2.split(\":\")[0].to_i*60+t2.split(\":\")[1].to_i\}))
+\n    \ntrim2=\\\$((dur - \#\{i == 0 ? 0 : (t1.split(\":\")[0].to_i*60+t1.split(\":\")[1].to_i)\}))
+\n    \nffmpeg -ss \\\$trim -t \\\$trim2 -i tv.mp4 \#{nom}.mp4
 \n    \nmid3v2 -a \#\{temps[nmusiques]['title'].dump\} -t \#\{temps[nmusiques]['title'].dump\} \#\{nom\}.mp4
 \n    \"\"\"
 \n    system(cut)
