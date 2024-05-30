@@ -11,6 +11,7 @@ lib/assets/*.m3u
 public/uploads
 lib/assets/file1.mp3
 lib/assets/*.mp3
+lib/assets/tv.mp4
 lib/assets/*.json
 lib/assets/sample-data**
 lib/assets/stream**

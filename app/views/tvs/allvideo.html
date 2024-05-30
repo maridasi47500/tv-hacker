@@ -1,0 +1,57 @@
+<p id="notice"><%= notice %></p>
+
+<div hidden id="lyrichash">[]</div>
+<div hidden id="track_list"><%=raw (Video.track_list)%></div>
+<div hidden id="curr_time_m"></div>
+
+<div class="player">
+ 
+    <!-- Define the section for displaying details -->
+    <div class="details">
+      <div class="now-playing">PLAYING x OF y</div>
+      <div class="track-art"></div>
+      <div class="track-id" hidden></div>
+      <div class="track-name">Track Name</div>
+      <div class="track-artist">Track Artist</div>
+      <div id="mycurrtrack"></div>
+    </div>
+<p id="displaylyric"></p>
+ 
+    <!-- Define the section for displaying track buttons -->
+    <div class="buttons">
+      <div class="idontlike" onclick="(confirm('vous n\' aimez pas la chanson') ? idontlike() : console.log('ok'));">
+        &#128078; jaime pas
+      </div>
+</div>
+    <div class="buttons">
+      <div class="prev-track" onclick="prevTrack()">
+        &#x25C0;&#x25C0;
+      </div>
+      <div class="playpause-track" onclick="playpauseTrack()">
+        &#x25B6;
+      </div>
+      <div class="next-track" onclick="nextTrack()">
+        &#x25B6;
+        &#x25B6;
+      </div>
+    </div>
+ 
+    <!-- Define the section for displaying the seek slider-->
+    <div class="slider_container">
+      <div class="current-time">00:00</div>
+      <input type="range" min="1" max="100"
+        value="0" class="seek_slider" onchange="seekTo()">
+      <div class="total-duration">00:00</div>
+    </div>
+ 
+    <!-- Define the section for displaying the volume slider-->
+    <div class="slider_container">
+      &#x1F509;
+      <input type="range" min="1" max="100"
+        value="99" class="volume_slider" onchange="setVolume()">
+      &#x1F50A;
+    </div>
+  </div>
+<ul class="lyrics">
+</ul>
+<%= link_to 'Back', songs_path %>

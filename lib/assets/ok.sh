@@ -1,4 +1,3 @@
-#!
 cat <<EOF > cut.rb 
 
 require 'time'
@@ -45,23 +44,29 @@ temps = @all #.sort {|x,y| y['time'] <=> x['time']} #.pluck('time')
 
   if nom.strip.length > 0
 
-    cut = "sh tele.sh; "
+    #cut = "sh tele.sh; "
 
-    wow='''dur=\$(ffprobe -i tv.mp4 -show_entries format=duration -v quiet -of csv="p=0")
+    cut="""dur=\$(ffprobe -i tv.mp4 -show_entries format=duration -v quiet -of csv="p=0")
 
-    \ntrim=\$('(#{i == 0 ? "" : "dur - "}#{t2.split(":")[0].to_i*60+t2.split(":")[1].to_i})')
+    
+trim=\$((#{i == 0 ? "" : "dur - "}#{t2.split(":")[0].to_i*60+t2.split(":")[1].to_i}))
 
-    \ntrim2=\$('(dur - #{t1.split(":")[0].to_i*60+t1.split(":")[1].to_i})')
+    
+trim2=\$((dur - #{t1.split(":")[0].to_i*60+t1.split(":")[1].to_i}))
 
-    \nffmpeg -t \$trim -i tv.mp4 #{nom}.mp4
+    
+ffmpeg -t $trim -i tv.mp4 #{nom}.mp4
 
-    '''
+    
+mid3v2 -a #{temps[nmusiques]['title'].dump} -t #{temps[nmusiques]['title'].dump} #{nom}.mp4;"
 
-    yourfile="tele.sh"
+    """
 
-    File.open(yourfile, 'w') { |file| file.write(wow) }
+    #yourfile="tele.sh"
 
-    cut+="mid3v2 -a #{temps[nmusiques]['title'].dump} -t #{temps[nmusiques]['title'].dump} #{nom}.mp4;"
+    #File.open(yourfile, 'w') { |file| file.write(wow) }
+
+    #cut+="mid3v2 -a #{temps[nmusiques]['title'].dump} -t #{temps[nmusiques]['title'].dump} #{nom}.mp4;"
 
     system(cut)
 
@@ -73,11 +78,11 @@ end
 
 hack(-460)
 
-#mydate and time : lib/assets/history/history/20240529115029/
+#mydate and time : lib/assets/history/history/20240530085823/
 
 EOF
 
 echo heeeey
 ls
-mkdir -p history/20240529115029; mv cut.rb history/20240529115029; mv tv.mp4 history/20240529115029;(cd history/20240529115029 && ruby cut.rb);
+mkdir -p history/20240530085823; mv cut.rb history/20240530085823; mv tv.mp4 history/20240530085823;(cd history/20240530085823 && ruby cut.rb);
 
