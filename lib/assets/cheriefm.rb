@@ -1,11 +1,8 @@
+require 'json'
 require "open-uri"
 require 'active_support/core_ext/hash'
 require "nokogiri"
-require "json"
 require "time"
-#ruby bfm_tv_programs.rb 'URL_TO_BFM_TV_XML_FEED'
-
-@input_array = ARGV
 
 def every_so_many_seconds(seconds)
   last_tick = Time.now
@@ -24,23 +21,20 @@ data_hash = { "videos": [] }
 @file1 = './sample-data-cherie.json'
 File.write(@file, JSON.dump(data_hash))
 
-def myfunc
+def myfunc(input_file)
   p Time.now
   file = File.read(@file)
   data_hash = JSON.parse(file)
-  tv_json = Nokogiri::XML(URI.open(@input_array[0]))
+  tv_json = JSON.parse(File.read(input_file))
 
-  @vids = tv_json.xpath('//programme')
-  all = []
-
-  @vids.each_with_index do |vid, n|
+  tv_json["programme"].each_with_index do |vid, n|
     begin
-      title = vid.at_xpath('title').text
-      description = vid.at_xpath('desc').text
-      link = vid.at_xpath('url').text
-      time = DateTime.parse(vid.at_xpath('start').text.gsub(" GMT", "")).to_time.localtime
-      image = vid.at_xpath('icon/@src').to_s rescue ""
-      
+      title = vid["title"]
+      description = vid["desc"]
+      link = vid["url"]
+      time = DateTime.parse(vid["start"].gsub(" GMT", "")).to_time.localtime
+      image = vid["icon"] || ""
+
       current_video = {
         "title" => title,
         "description" => description,
@@ -49,7 +43,7 @@ def myfunc
         "image" => image,
         "time" => time
       }
-      
+
       p current_video
       unless data_hash["videos"].any? { |h| h["title"] == current_video["title"] }
         data_hash["videos"] << current_video
@@ -59,9 +53,9 @@ def myfunc
 
     rescue => e
       p e.message
-      vid.children.each_with_index do |y, zz|
+      vid.each_with_index do |y, zz|
         p zz
-        p y.text rescue p "oops"
+        p y rescue p "oops"
       end
       next
     end
@@ -71,8 +65,8 @@ rescue => e
   p "ouy"
 end
 
-myfunc()
+input_file = ARGV[0]
+myfunc(input_file)
 every_so_many_seconds(90) do
-  myfunc()
+  myfunc(input_file)
 end
-
