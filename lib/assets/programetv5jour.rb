@@ -20,7 +20,7 @@ end
 
 # Process BFM TV data and save to JSON
 def process_bfm_tv(xml_content, output_file)
-  data_hash = { "videos": [] }
+  data_hash = { "programme": [] }
   tv_json = Nokogiri::XML(xml_content)
   @vids = tv_json.xpath('//programme[starts-with(channel, "BFM TV")]')
 
