@@ -3,6 +3,7 @@ require 'active_support/core_ext/hash'
 require "nokogiri"
 require "json"
 require "time"
+#ruby bfm_tv_programs.rb 'URL_TO_BFM_TV_XML_FEED'
 
 @input_array = ARGV
 
