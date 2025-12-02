@@ -6,6 +6,9 @@
 
 # Ignore bundler config.
 /.bundle
+*.m3u
+**.m3u
+**.**.m3u
 lib/assets/history
 lib/assets/*.m3u
 public/uploads

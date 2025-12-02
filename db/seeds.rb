@@ -31,9 +31,9 @@ all.each do |j|
 
 
   p j
-  s=Video.find_or_create_by(filename: j["filename"].parameterize, description: j["description"],link:j["link"],title: j["title"])
+  s=Video.find_or_create_by(filename: j["filename"].to_s.parameterize, description: j["description"],link:j["link"],title: j["title"])
   s.update(image:(j['image'] and j["image"].length > 0 ? j["image"] : nil))
   end
 end
 
-end
+#end

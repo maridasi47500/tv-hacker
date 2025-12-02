@@ -1,5 +1,13 @@
 body {
   background-color: black;
+color:white;
+ 
+  /* Smoothly transition the background color */
+  /*transition: background-color .5s;*/
+}
+body * {
+  background-color: black;
+color:white;
  
   /* Smoothly transition the background color */
   /*transition: background-color .5s;*/
