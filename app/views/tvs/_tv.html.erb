@@ -1,17 +1,12 @@
-<div id="<%= dom_id tv %>">
-  <p>
-    <strong>Name:</strong>
-    <%= tv.name %>
-  </p>
+<div class="mytv" id="<%= dom_id tv %>">
+  <div class="tvcanal">
+    <span class="mycanal">CANAL</span>
+    <%= tv.id %>
 
-  <p>
-    <strong>Rss:</strong>
-    <%= tv.rss %>
-  </p>
+  </div>
+  <div class="tvname">
 
-  <p>
-    <strong>Lien:</strong>
-    <%= tv.lien %>
-  </p>
+    <%= tv.name.upcase %>
+  </div>
 
 </div>

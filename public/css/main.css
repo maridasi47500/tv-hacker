@@ -157,3 +157,38 @@ i.fa-step-backward {
 cursor:pointer;
 }
 
+h2 {
+	background: #ff3c00;
+	font-style: normal;
+	font-optical-sizing: initial;
+	text-align: center;
+}
+h1 {
+	background: white;
+	font-style: normal;
+	font-optical-sizing: initial;
+	text-align: center;
+color:green;
+}
+.tvcanal, .tvname {
+float:left;
+color: #ff3000;
+font-size: 20px;
+padding-left:10px;
+}
+.tvcanal {
+	float: left;
+	clear: ;
+	font-size: 25px;
+	text-align: left;
+	color: #ff3000;
+	font-weight: 900;
+}
+.mycanal {
+	float: left;
+	width: 100%;
+	background: green;
+	font-weight: 900;
+	text-align: center;
+	font-size: 15px;
+}
