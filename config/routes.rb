@@ -1,7 +1,9 @@
 Rails.application.routes.draw do
+  resources :tvstreams
   resources :videos
   resources :tvs do
     member do
+      get "addtv"
       get "script1"
       get "script2"
     end

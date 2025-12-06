@@ -42,6 +42,27 @@ chercher une ip tv avec un rss feed:
     <%= form.text_field :lien %>
   </div>
   <p>bonne chance!!</p>
+  <%=form.fields_for :tvstreams do |f|%>
+  <p>hey tv stream</p>
+  <div>
+    <%= f.label :name, style: "display: block" %>
+    <%= f.text_field :name %>
+  </div>
+  <div>
+    <%= f.label :firsttv, "first tv that you want in the tvs", style: "display: block" %>
+    <%= f.text_field :firsttv %>
+  </div>
+  <div>
+    <%= f.label :mytv, style: "display: block" %>
+    <%= f.file_field :mytv %>
+  </div>
+  <hr>
+  <%end%>
+  <div>
+    <%= form.label :rss, style: "display: block" %>
+    (rss feed, chercher le rss feed d'une ipiv)
+    <%= form.text_field :rss %>
+  </div>
 
   <div>
     <%= form.submit %>

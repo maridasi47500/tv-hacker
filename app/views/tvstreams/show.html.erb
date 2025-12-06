@@ -1,0 +1,10 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @tvstream %>
+
+<div>
+  <%= link_to "Edit this tvstream", edit_tvstream_path(@tvstream) %> |
+  <%= link_to "Back to tvstreams", tvstreams_path %>
+
+  <%= button_to "Destroy this tvstream", @tvstream, method: :delete %>
+</div>

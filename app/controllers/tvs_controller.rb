@@ -1,5 +1,5 @@
 class TvsController < ApplicationController
-  before_action :set_tv, only: %i[ show edit update destroy script1 script2 ]
+  before_action :set_tv, only: %i[ show edit update destroy script1 script2 addtv ]
 
   # GET /tvs or /tvs.json
   def index
@@ -44,6 +44,10 @@ class TvsController < ApplicationController
   end
 
   # GET /tvs/1/edit
+  def addtv
+     @tv.tvstreams.new
+     render :edit
+  end
   def edit
   end
 
@@ -93,6 +97,6 @@ class TvsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def tv_params
-      params.require(:tv).permit(:name, :rss, :lien)
+      params.require(:tv).permit(:name, :rss, :lien, :tvstreams_attributes => {})
     end
 end
